@@ -1,25 +1,49 @@
-import logo from './logo.svg';
+import { pokemons } from './pokemons';
+import React, {Component} from 'react';
+import SearchBox from './SearchBox';
 import './App.css';
+import Cardlist from './Cardlist.js';
+import Scroll from './Scroll.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const state = {
+    pokemons: pokemons,
+    searchfield:''
 }
 
+class App extends Component 
+{
+    constructor()
+    {
+        super()
+        this.state = {
+            pokemons: pokemons,
+            searchfield:''
+            }
+    }
+
+    onSearchChange = (event) => {
+        this.setState( { searchfield : event.target.value } )
+        const filteredPokemons = this.state.pokemons.filter(pokemons=>{
+            return pokemons.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+        })
+    }
+    render()
+    {
+        const filteredPokemons = this.state.pokemons.filter(pokemons=>{
+            return pokemons.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+        })
+        return(
+            <div className="App">
+                
+                <div className="Navigation">
+                    <div className="mainHeading">PokeFriends</div>
+                    <SearchBox searchChange={this.onSearchChange} />
+                </div>
+                <Scroll >
+                <Cardlist pokemons={filteredPokemons}/>
+                </Scroll >
+            </div>
+        );
+    }
+}
 export default App;

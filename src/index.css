@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.pokemons{
+  display:flex;
+  flex-wrap:wrap;
+  text-align:center;
+}
+.pokemons *{
+  margin:5px;
+}
